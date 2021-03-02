@@ -1,22 +1,3 @@
-// const multer = require("multer");
-// const path = require('path');
-// const { v4: uuidv4 } = require('uuid');
-
-
-// const storage = multer.diskStorage({
-//     destination:function(req, file, cb){
-//         cb(null, './src/uploads/imgs' )
-//     },
-//     filename:function(req, file, cb){
-//         cb(null, `${file.fieldname}-${Date.now()}.png`)
-//     }
-// })
-
-// const upload = multer({storage})
-
-// module.exports = upload
-
-
 const multer = require("multer");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");

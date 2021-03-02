@@ -1,11 +1,11 @@
-const Product = require("./ProductModel");
+const ProductModel = require("./ProductModel");
 
 //__* CREAR UN PRODUCTO
 exports.addProduct = async (req, res) => {
   try {
     const { name, size, unitaryPrice, description } = req.body;
 
-    const product = Product({
+    const product = ProductModel({
       name,
       size,
       unitaryPrice,
@@ -21,8 +21,8 @@ exports.addProduct = async (req, res) => {
     const productStored = await product.save();
 
     res.status(201).send({ productStored });
-  } catch (e) {
-    res.status(500).send({ message: e.message });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -30,7 +30,7 @@ exports.addProduct = async (req, res) => {
 
 //__* OBTENER TODOS LOS PRODUCTOS
 exports.getProducts = async (req, res) => {
-  const products = await Product.find().lean().exec();
+  const products = await ProductModel.find().lean().exec();
   res.status(200).send({ products });
 };
 

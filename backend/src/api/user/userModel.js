@@ -20,7 +20,6 @@ const userSchema = new Schema(
       enum: ["user", "admin"],
       required: true,
     },
-    todos: [{ type: Schema.Types.ObjectId, ref: "todo" }],
   },
   {
     timestamps: true,
@@ -28,32 +27,25 @@ const userSchema = new Schema(
 );
 
 //encripta el password
-UserSchema.pre('save',function(next){
-    if(!this.isModified('password'))
-        return next();
-    bcrypt.hash(this.password,10,(err,passwordHash)=>{
-        if(err)
-            return next(err);
-        this.password = passwordHash;
-        next();
-    });
+UserSchema.pre("save", function (next) {
+  if (!this.isModified("password")) return next();
+  bcrypt.hash(this.password, 10, (err, passwordHash) => {
+    if (err) return next(err);
+    this.password = passwordHash;
+    next();
+  });
 });
 
-
 //decifra el password
-UserSchema.methods.comparePassword = function(password,cb){
-    bcrypt.compare(password,this.password,(err,isMatch)=>{
-        if(err)
-            return cb(err);
-        else{
-            if(!isMatch)
-                return cb(null,isMatch);
-            return cb(null,this);
-        }
-    });
-}
-
-
+UserSchema.methods.comparePassword = function (password, cb) {
+  bcrypt.compare(password, this.password, (err, isMatch) => {
+    if (err) return cb(err);
+    else {
+      if (!isMatch) return cb(null, isMatch);
+      return cb(null, this);
+    }
+  });
+};
 
 //FUNCION PARA NO MOSTRAR EL PASSWORD EN EL JSON DEL BACK-END Y FRONTEND
 // userSchema.methods.toJSON = function() {
